@@ -1,7 +1,19 @@
 const app = require("./app");
 const config = require("./app/config");
+const MongoDB = require("./app/utils/mongodb.util");
 
-const port = config.app.port;
-app.listen(port, () => {
-    console.log('Server is running at port ${port}.');
-});
+async function startServer() {
+    try {
+        await MongoDB.connect(config.db.uri);
+        console.log("Connected to the datebase!");
+
+        const PORT = config.app.port;
+        app.listen(PORT, () => {
+            console.log('Server is running on port ${PORT}');
+        });
+    } catch (error) {
+        console.log("Cannot connect to the datebase!", error);
+        process.exit();
+    }
+}
+startServer();
