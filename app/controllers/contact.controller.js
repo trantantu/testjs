@@ -33,7 +33,7 @@ exports.findOne = async (req, res, next) => {
         return res.send(document);
     } catch (error) {
         return next(
-            new ApiError(500, 'Error retrieving contact with id=${req.params.id}')
+            new ApiError(500, 'Error retrieving contact with id= ' + req.params.id + '')
         );
     }
 };
@@ -51,7 +51,7 @@ exports.update = async (req, res, next) => {
         return res.send({ massage: "Contact was update successfully" });
     } catch (error) {
         return next(
-            new ApiError(500, 'Error updating contact with id=${req.params.id}')
+            new ApiError(500, 'Error updating contact with id=' + req.params.id + '')
         );
 
     }
@@ -67,7 +67,7 @@ exports.delete = async (req, res, next) => {
         return res.send({ massage: "Contact was delete successfully" });
     } catch (error) {
         return next(
-            new ApiError(500, 'Could not delete contact with id=${req.params.id}')
+            new ApiError(500, 'Could not delete contact with id=' + req.params.id + '')
         );
 
     }
