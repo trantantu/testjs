@@ -4,6 +4,20 @@ class ContactService {
     constructor(client) {
         this.Contact = client.db().collection("contacts");
     }
+    async find(filter) {
+        const cursor = await this.Contact.find(filter);
+        return await cursor.toArray();
+    }
+    async findByName(name) {
+        return await this.find({
+            name: { $regex: new RegExp(name), $options: "i" },
+        });
+    }
+    async findById(id) {
+        return await this.Contact.findOne({
+            _id: ObjectId.isValid(id) ? new ObjectId(id) : null,
+        });
+    }
     extractConactData(payload) {
         const contact = {
             name: payload.name,
